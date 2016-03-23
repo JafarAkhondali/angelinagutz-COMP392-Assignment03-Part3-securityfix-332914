@@ -52,6 +52,21 @@
     },
     "physijs/physijs.d.ts": {
       "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
+    },
+    "tweenjs/tweenjs.d.ts": {
+      "commit": "b14601af3fb2ad72d5048e94188a569a1838fb9c"
+    },
+    "createjs-lib/createjs-lib.d.ts": {
+      "commit": "b14601af3fb2ad72d5048e94188a569a1838fb9c"
+    },
+    "easeljs/easeljs.d.ts": {
+      "commit": "b14601af3fb2ad72d5048e94188a569a1838fb9c"
+    },
+    "soundjs/soundjs.d.ts": {
+      "commit": "b14601af3fb2ad72d5048e94188a569a1838fb9c"
+    },
+    "preloadjs/preloadjs.d.ts": {
+      "commit": "b14601af3fb2ad72d5048e94188a569a1838fb9c"
     }
   }
 }
