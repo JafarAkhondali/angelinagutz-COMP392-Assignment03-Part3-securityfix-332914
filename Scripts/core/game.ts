@@ -236,10 +236,6 @@ var game = (() => {
     var door1: Physijs.Mesh;
     var door1Texture: Texture;
 
-    var sphereGeometry: SphereGeometry;
-    var sphereMaterial: Physijs.Material;
-    var sphere: Physijs.Mesh;
-
     var clock: Clock;
     var keyboardControls: objects.KeyboardControls;
     var mouseControls: objects.MouseControls;
@@ -250,10 +246,18 @@ var game = (() => {
     var directionLineGeometry: Geometry;
     var directionLine: Line;
 
+    //Scoreboard
     var canvas: HTMLElement;
     var stage: createjs.Stage;
     var scoreLabel: createjs.Text;
     var scoreValue: number;
+    
+    //Coin
+    var coinGeometry: Geometry;
+    var coinMaterial: Physijs.Material;
+    var coin1: Physijs.ConvexMesh;
+    var coin2: Physijs.ConvexMesh;
+    var coin3: Physijs.ConvexMesh;
 
     function setupScoreboard(): void {
         //Initialize Score value
@@ -402,7 +406,7 @@ var game = (() => {
         roadMainMaterial.bumpScale = 0.2;
 
         // Road One
-        road1Geometry = new BoxGeometry(2.5, 4, 100);
+        road1Geometry = new BoxGeometry(2.5, 4, 50);
         road1PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
         road1 = new Physijs.BoxMesh(road1Geometry, road1PhysicsMaterial, 0);
         road1.receiveShadow = true;
@@ -414,7 +418,7 @@ var game = (() => {
 
         //Road Two
 
-        road2Geometry = new BoxGeometry(2.5, 4, 100);
+        road2Geometry = new BoxGeometry(2.5, 4, 50);
         road2PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
         road2 = new Physijs.BoxMesh(road2Geometry, road2PhysicsMaterial, 0);
         road2.receiveShadow = true;
@@ -425,15 +429,336 @@ var game = (() => {
         console.log("Added a Road 2 to the scene");
 
         // Road Three
-        road3Geometry = new BoxGeometry(65, 4, 1.7);
+        road3Geometry = new BoxGeometry(82.5, 4, 1.7);
         road3PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
         road3 = new Physijs.BoxMesh(road3Geometry, road3PhysicsMaterial, 0);
         road3.receiveShadow = true;
         road3.castShadow = true;
-        road3.position.set(-15, 0, -25);
+        road3.position.set(0, 0, -25);
         road3.name = "Road3";
         scene.add(road3);
         console.log("Added a Road 3 to the scene");
+        
+        // Road Four
+        road4Geometry = new BoxGeometry(82.5, 4, 1.7);
+        road4PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road4 = new Physijs.BoxMesh(road4Geometry, road4PhysicsMaterial, 0);
+        road4.receiveShadow = true;
+        road4.castShadow = true;
+        road4.position.set(0, 0, 25);
+        road4.name = "Road4";
+        scene.add(road4);
+        console.log("Added a Road 4 to the scene");
+        
+        // Road Five
+        road5Geometry = new BoxGeometry(110, 4, 3.5);
+        road5PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road5 = new Physijs.BoxMesh(road5Geometry, road5PhysicsMaterial, 0);
+        road5.receiveShadow = true;
+        road5.castShadow = true;
+        road5.position.set(20, 0, 69);
+        road5.name = "Road5";
+        scene.add(road5);
+        console.log("Added a Road 5 to the scene");
+        
+        // Road Six
+        road6Geometry = new BoxGeometry(110, 4, 3.5);
+        road6PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road6 = new Physijs.BoxMesh(road6Geometry, road6PhysicsMaterial, 0);
+        road6.receiveShadow = true;
+        road6.castShadow = true;
+        road6.position.set(-20, 0, -74);
+        road6.name = "Road6";
+        scene.add(road6);
+        console.log("Added a Road 6 to the scene");
+        
+         // Road Seven
+        road7Geometry = new BoxGeometry(110, 4, 1);
+        road7PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road7 = new Physijs.BoxMesh(road7Geometry, road7PhysicsMaterial, 0);
+        road7.receiveShadow = true;
+        road7.castShadow = true;
+        road7.position.set(20, 0, -40);
+        road7.name = "Road7";
+        scene.add(road7);
+        console.log("Added a Road 7 to the scene");
+        
+        // Road Eight
+        road8Geometry = new BoxGeometry(50, 4, 3);
+        road8PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road8 = new Physijs.BoxMesh(road8Geometry, road8PhysicsMaterial, 0);
+        road8.receiveShadow = true;
+        road8.castShadow = true;
+        road8.position.set(30, 0, -15);
+        road8.name = "Road8";
+        scene.add(road8);
+        console.log("Added a Road 8 to the scene");
+        
+        // Road Nine
+        road9Geometry = new BoxGeometry(50, 4, 3);
+        road9PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road9 = new Physijs.BoxMesh(road9Geometry, road9PhysicsMaterial, 0);
+        road9.receiveShadow = true;
+        road9.castShadow = true;
+        road9.position.set(-30, 0, 15);
+        road9.name = "Road9";
+        scene.add(road9);
+        console.log("Added a Road 9 to the scene");
+        
+        // Road Ten
+        road10Geometry = new BoxGeometry(35, 4, 2.5);
+        road10PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road10 = new Physijs.BoxMesh(road10Geometry, road10PhysicsMaterial, 0);
+        road10.receiveShadow = true;
+        road10.castShadow = true;
+        road10.position.set(18, 0, 22);
+        road10.name = "Road10";
+        scene.add(road10);
+        console.log("Added a Road 10 to the scene");
+        
+        // Road Eleven
+        road11Geometry = new BoxGeometry(2, 4, 50);
+        road11PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road11 = new Physijs.BoxMesh(road11Geometry, road11PhysicsMaterial, 0);
+        road11.receiveShadow = true;
+        road11.castShadow = true;
+        road11.position.set(35, 0, 35);
+        road11.name = "Road11";
+        scene.add(road11);
+        console.log("Added a Road 11 to the scene");
+        
+        // Road Twelve
+        road12Geometry = new BoxGeometry(1.5, 4, 50);
+        road12PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road12 = new Physijs.BoxMesh(road12Geometry, road12PhysicsMaterial, 0);
+        road12.receiveShadow = true;
+        road12.castShadow = true;
+        road12.position.set(25, 0, -20);
+        road12.name = "Road12";
+        scene.add(road12);
+        console.log("Added a Road 12 to the scene");
+               
+        // Road Thirteen
+        road13Geometry = new BoxGeometry(1, 4, 50);
+        road13PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road13 = new Physijs.BoxMesh(road13Geometry, road13PhysicsMaterial, 0);
+        road13.receiveShadow = true;
+        road13.castShadow = true;
+        road13.position.set(-35, 0, 20);
+        road13.name = "Road13";
+        scene.add(road13);
+        console.log("Added a Road 13 to the scene");
+        
+         
+        // Road Fourteen
+        road14Geometry = new BoxGeometry(1.5, 4, 50);
+        road14PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road14 = new Physijs.BoxMesh(road14Geometry, road14PhysicsMaterial, 0);
+        road14.receiveShadow = true;
+        road14.castShadow = true;
+        road14.position.set(-55, 0, 40);
+        road14.name = "Road14";
+        scene.add(road14);
+        console.log("Added a Road 14 to the scene");
+        
+        // Road Fifteen
+        road15Geometry = new BoxGeometry(40, 4, 1.25);
+        road15PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road15 = new Physijs.BoxMesh(road15Geometry, road15PhysicsMaterial, 0);
+        road15.receiveShadow = true;
+        road15.castShadow = true;
+        road15.position.set(-55, 0, 60);
+        road15.name = "Road15";
+        scene.add(road15);
+        console.log("Added a Road 15 to the scene");
+        
+        // Road Sixteen
+        road16Geometry = new BoxGeometry(40, 4, 2.15);
+        road16PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road16 = new Physijs.BoxMesh(road16Geometry, road16PhysicsMaterial, 0);
+        road16.receiveShadow = true;
+        road16.castShadow = true;
+        road16.position.set(35, 0, 55);
+        road16.name = "Road16";
+        scene.add(road16);
+        console.log("Added a Road 16 to the scene");
+        
+        // Road Seventeen
+        road17Geometry = new BoxGeometry(40, 4, 2.5);
+        road17PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road17 = new Physijs.BoxMesh(road17Geometry, road17PhysicsMaterial, 0);
+        road17.receiveShadow = true;
+        road17.castShadow = true;
+        road17.position.set(-17, 0, 52);
+        road17.name = "Road17";
+        scene.add(road17);
+        console.log("Added a Road 17 to the scene");
+        
+        // Road Eighteen
+        road18Geometry = new BoxGeometry(40, 4, 2);
+        road18PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road18 = new Physijs.BoxMesh(road18Geometry, road18PhysicsMaterial, 0);
+        road18.receiveShadow = true;
+        road18.castShadow = true;
+        road18.position.set(55, 0, 10);
+        road18.name = "Road18";
+        scene.add(road18);
+        console.log("Added a Road 18 to the scene");
+        
+        
+        // Road Nineteen
+        road19Geometry = new BoxGeometry(1.1, 4, 60);
+        road19PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road19 = new Physijs.BoxMesh(road19Geometry, road19PhysicsMaterial, 0);
+        road19.receiveShadow = true;
+        road19.castShadow = true;
+        road19.position.set(55, 0, 10);
+        road19.name = "Road19";
+        scene.add(road19);
+        console.log("Added a Road 19 to the scene");
+        
+        // Road Twenty
+        road20Geometry = new BoxGeometry(3.5, 4, 70);
+        road20PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road20 = new Physijs.BoxMesh(road20Geometry, road20PhysicsMaterial, 0);
+        road20.receiveShadow = true;
+        road20.castShadow = true;
+        road20.position.set(-73, 0, 10);
+        road20.name = "Road20";
+        scene.add(road20);
+        console.log("Added a Road 20 to the scene");
+        
+        // Road Twenty-One
+        road21Geometry = new BoxGeometry(2.15, 4, 70);
+        road21PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road21 = new Physijs.BoxMesh(road21Geometry, road21PhysicsMaterial, 0);
+        road21.receiveShadow = true;
+        road21.castShadow = true;
+        road21.position.set(-50, 0, -30);
+        road21.name = "Road21";
+        scene.add(road21);
+        console.log("Added a Road 21 to the scene");
+        
+        // Road Twenty-Two
+        road22Geometry = new BoxGeometry(0.5, 4, 55);
+        road22PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road22 = new Physijs.BoxMesh(road22Geometry, road22PhysicsMaterial, 0);
+        road22.receiveShadow = true;
+        road22.castShadow = true;
+        road22.position.set(50, 0, -48);
+        road22.name = "Road22";
+        scene.add(road22);
+        console.log("Added a Road 22 to the scene");
+                       
+        // Road Twenty-Three
+        road23Geometry = new BoxGeometry(55, 4, 0.5);
+        road23PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road23 = new Physijs.BoxMesh(road23Geometry, road23PhysicsMaterial, 0);
+        road23.receiveShadow = true;
+        road23.castShadow = true;
+        road23.position.set(0, 0, 0);
+        road23.name = "Road23";
+        scene.add(road23);
+        console.log("Added a Road 23 to the scene");
+        
+        // Road Twenty-Four
+        road24Geometry = new BoxGeometry(70, 4, 0.75);
+        road24PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road24 = new Physijs.BoxMesh(road24Geometry, road24PhysicsMaterial, 0);
+        road24.receiveShadow = true;
+        road24.castShadow = true;
+        road24.position.set(-25, 0, -60);
+        road24.name = "Road24";
+        scene.add(road24);
+        console.log("Added a Road 24 to the scene");
+        
+        // Road Twenty-Five
+        road25Geometry = new BoxGeometry(30, 4, 1.75);
+        road25PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road25 = new Physijs.BoxMesh(road25Geometry, road25PhysicsMaterial, 0);
+        road25.receiveShadow = true;
+        road25.castShadow = true;
+        road25.position.set(-60, 0, -40);
+        road25.name = "Road25";
+        scene.add(road25);
+        console.log("Added a Road 25 to the scene");
+        
+        // Road Twenty-Six
+        road26Geometry = new BoxGeometry(30, 4, 0.5);
+        road26PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road26 = new Physijs.BoxMesh(road26Geometry, road26PhysicsMaterial, 0);
+        road26.receiveShadow = true;
+        road26.castShadow = true;
+        road26.position.set(-60, 0, -10);
+        road26.name = "Road26";
+        scene.add(road26);
+        console.log("Added a Road 26 to the scene");
+        
+        // Road Twenty-Seven
+        road27Geometry = new BoxGeometry(0.5, 4, 35);
+        road27PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road27 = new Physijs.BoxMesh(road27Geometry, road27PhysicsMaterial, 0);
+        road27.receiveShadow = true;
+        road27.castShadow = true;
+        road27.position.set(-60, 0, -25);
+        road27.name = "Road27";
+        scene.add(road27);
+        console.log("Added a Road 27 to the scene");
+                
+        // Road Twenty-Eight
+        road28Geometry = new BoxGeometry(1.5, 4, 35);
+        road28PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road28 = new Physijs.BoxMesh(road28Geometry, road28PhysicsMaterial, 0);
+        road28.receiveShadow = true;
+        road28.castShadow = true;
+        road28.position.set(70, 0, -25);
+        road28.name = "Road28";
+        scene.add(road28);
+        console.log("Added a Road 28 to the scene");
+        
+        // Road Twenty-Nine
+        road29Geometry = new BoxGeometry(1.5, 4, 35);
+        road29PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road29 = new Physijs.BoxMesh(road29Geometry, road29PhysicsMaterial, 0);
+        road29.receiveShadow = true;
+        road29.castShadow = true;
+        road29.position.set(70, 0, 50);
+        road29.name = "Road29";
+        scene.add(road29);
+        console.log("Added a Road 29 to the scene");
+                
+        // Road Thirty
+        road30Geometry = new BoxGeometry(45, 4, 1.5);
+        road30PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road30 = new Physijs.BoxMesh(road30Geometry, road30PhysicsMaterial, 0);
+        road30.receiveShadow = true;
+        road30.castShadow = true;
+        road30.position.set(50, 0, 40);
+        road30.name = "Road30";
+        scene.add(road30);
+        console.log("Added a Road 30 to the scene");
+                
+        // Road Thirty-One
+        road31Geometry = new BoxGeometry(45, 4, 1.5);
+        road31PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road31 = new Physijs.BoxMesh(road31Geometry, road31PhysicsMaterial, 0);
+        road31.receiveShadow = true;
+        road31.castShadow = true;
+        road31.position.set(40, 0, -65);
+        road31.name = "Road31";
+        scene.add(road31);
+        console.log("Added a Road 31 to the scene");
+        
+        // Road Thirty-Two
+        road32Geometry = new BoxGeometry(0.5, 4, 60);
+        road32PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
+        road32 = new Physijs.BoxMesh(road32Geometry, road32PhysicsMaterial, 0);
+        road32.receiveShadow = true;
+        road32.castShadow = true;
+        road32.position.set(-40, 0, -45);
+        road32.name = "Road32";
+        scene.add(road32);
+        console.log("Added a Road 32 to the scene");
 
         // Platform Components
 
@@ -538,7 +863,25 @@ var game = (() => {
         door1 = new Physijs.BoxMesh(door1Geometry, door1PhysicsMaterial, 0);
         door1.receiveShadow = true;
         door1.castShadow = true;
-        door1.position.set(60, 5, -51);
+        
+        //Use rng to determine position of door and coins
+        var num: number = Math.floor(Math.random() * 10);
+        if (num > 5) {
+            if (num > 8) {
+                door1.position.set(60, 5, -51); 
+            }
+            else {
+                door1.position.set(-60, 5, -51);
+            }
+        }
+        else {
+            if (num > 3) {
+                door1.position.set(60, 5, 51);
+            }
+            else{
+                door1.position.set(-60, 5, 51);
+            }
+        }
         door1.name = "Door1";
         scene.add(door1);
         console.log("Added a Door1 to the scene");
@@ -559,7 +902,18 @@ var game = (() => {
             console.log(event);
             if (event.name === "Ground") {
                 console.log("Booped ground");
-                isGrounded = true;
+            keyboardControls.enabled = false;
+            mouseControls.enabled = false;
+            blocker.style.display = '-webkit-box';
+            blocker.style.display = '-moz-box';
+            blocker.style.display = 'box';
+            instructions.style.display = '';
+            console.log("PointerLock disabled");
+            scoreValue = 0;
+            scoreLabel.text = "Score: " + scoreValue;
+            scene.remove(player);
+            player.position.set(0, 10, 10);
+            scene.add(player);
             }
             if (event.name === "Road1") {
                 console.log("Booped Road1");
@@ -612,8 +966,8 @@ var game = (() => {
         console.log("Added DirectionLine to the Player");
 
         // create parent-child relationship with camera and player
-        //player.add(camera);
-        //camera.position.set(0, 1, 0);
+      //  player.add(camera);
+      // camera.position.set(0, 1, 0);
 
         // Add framerate stats
         addStatsObject();
@@ -710,7 +1064,7 @@ var game = (() => {
                 }
                 if (keyboardControls.jump) {
                     velocity.y += 4000.0 * delta;
-                    if (player.position.y > 4) {
+                    if (player.position.y > 500) {
                         isGrounded = false;
                     }
                 }
@@ -763,8 +1117,8 @@ var game = (() => {
     // Setup main camera for the scene
     function setupCamera(): void {
         camera = new PerspectiveCamera(35, config.Screen.RATIO, 0.1, 300);
-        camera.position.set(0, 100, 100);
-        camera.lookAt(new Vector3(0, 0, 0));
+       camera.position.set(0, 100, 100);
+       camera.lookAt(new Vector3(0, 0, 0));
         console.log("Finished setting up Camera...");
     }
 
