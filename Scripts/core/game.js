@@ -849,6 +849,8 @@ var game = (function () {
                 }
                 recentScoreValue = scoreValue;
                 recentScoreLabel.text = "Recent Score: " + recentScoreValue;
+                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                document.exitPointerLock();
                 keyboardControls.enabled = false;
                 mouseControls.enabled = false;
                 blocker.style.display = '-webkit-box';
