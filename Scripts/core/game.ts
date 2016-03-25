@@ -251,8 +251,8 @@ var game = (() => {
     var stage: createjs.Stage;
     var scoreLabel: createjs.Text;
     var scoreValue: number;
-    var timeValue: number;
-    var timeLabel: createjs.Text;
+    var bonusValue: number;
+    var bonusLabel: createjs.Text;
     
     //Coin
     var coinGeometry: Geometry;
@@ -262,9 +262,9 @@ var game = (() => {
     var coin3: Physijs.ConvexMesh;
 
     function setupScoreboard(): void {
-        //Initialize Score and Time value
+        //Initialize Score and Bonus value
         scoreValue = 0;
-        timeValue = 9999;
+        bonusValue = 9999;
 
         //Add score label
 
@@ -278,16 +278,16 @@ var game = (() => {
         stage.addChild(scoreLabel);
         console.log("Added scoreLabel to stage");
         
-        //Time label
-        timeLabel = new createjs.Text(
-            "Time: " + timeValue,
+        //Bonus label
+        bonusLabel = new createjs.Text(
+            "Bonus: " + bonusValue,
             "40px Consolas",
             "#ffffff"
         );
-        timeLabel.x = config.Screen.WIDTH * 0.8;
-        timeLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
-        stage.addChild(timeLabel);
-        console.log("Added timeLabel to stage");
+        bonusLabel.x = config.Screen.WIDTH * 0.8;
+        bonusLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
+        stage.addChild(bonusLabel);
+        console.log("Added bonusLabel to stage");
 
     }
 
@@ -927,7 +927,9 @@ var game = (() => {
             instructions.style.display = '';
             console.log("PointerLock disabled");
             scoreValue = 0;
+            bonusValue = 9999;
             scoreLabel.text = "Score: " + scoreValue;
+            bonusLabel.text = "Bonus: " + bonusValue;
             scene.remove(player);
             player.position.set(0, 10, 10);
             scene.add(player);
@@ -970,8 +972,20 @@ var game = (() => {
             }
             if (event.name === "Door1") {
                 console.log("Booped Door 1");
-                scoreValue += timeValue;
+                scoreValue += bonusValue;
                 scoreLabel.text = "Score: " + scoreValue;
+                bonusValue = 9999;
+                bonusLabel.text = "Bonus: " + bonusValue;
+            keyboardControls.enabled = false;
+            mouseControls.enabled = false;
+            blocker.style.display = '-webkit-box';
+            blocker.style.display = '-moz-box';
+            blocker.style.display = 'box';
+            instructions.style.display = '';
+            console.log("PointerLock disabled");
+            scene.remove(player);
+            player.position.set(0, 10, 10);
+            scene.add(player);
                 
             }
             if (event.name === "Coin1") {
@@ -1094,8 +1108,8 @@ var game = (() => {
         canvas.style.width = "100%";     
         scoreLabel.x = config.Screen.WIDTH * 0.8;
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
-        timeLabel.x = config.Screen.WIDTH * 0.8;
-        timeLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
+        bonusLabel.x = config.Screen.WIDTH * 0.8;
+        bonusLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.update();
         
     }
@@ -1127,8 +1141,8 @@ var game = (() => {
     function checkControls(): void {
         if (keyboardControls.enabled) {
             velocity = new Vector3();
-            timeValue--;
-            timeLabel.text = "Time: " + timeValue;
+            bonusValue--;
+            bonusLabel.text = "Bonus: " + bonusValue;
             var time: number = performance.now();
             var delta: number = (time - prevTime) / 1000;
 

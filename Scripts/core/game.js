@@ -198,8 +198,8 @@ var game = (function () {
     var stage;
     var scoreLabel;
     var scoreValue;
-    var timeValue;
-    var timeLabel;
+    var bonusValue;
+    var bonusLabel;
     //Coin
     var coinGeometry;
     var coinMaterial;
@@ -207,21 +207,21 @@ var game = (function () {
     var coin2;
     var coin3;
     function setupScoreboard() {
-        //Initialize Score and Time value
+        //Initialize Score and Bonus value
         scoreValue = 0;
-        timeValue = 9999;
+        bonusValue = 9999;
         //Add score label
         scoreLabel = new createjs.Text("Score: " + scoreValue, "40px Consolas", "#ffffff");
         scoreLabel.x = config.Screen.WIDTH * 0.1;
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.addChild(scoreLabel);
         console.log("Added scoreLabel to stage");
-        //Time label
-        timeLabel = new createjs.Text("Time: " + timeValue, "40px Consolas", "#ffffff");
-        timeLabel.x = config.Screen.WIDTH * 0.8;
-        timeLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
-        stage.addChild(timeLabel);
-        console.log("Added timeLabel to stage");
+        //Bonus label
+        bonusLabel = new createjs.Text("Bonus: " + bonusValue, "40px Consolas", "#ffffff");
+        bonusLabel.x = config.Screen.WIDTH * 0.8;
+        bonusLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
+        stage.addChild(bonusLabel);
+        console.log("Added bonusLabel to stage");
     }
     function setupCanvas() {
         canvas = document.getElementById("canvas");
@@ -776,7 +776,9 @@ var game = (function () {
                 instructions.style.display = '';
                 console.log("PointerLock disabled");
                 scoreValue = 0;
+                bonusValue = 9999;
                 scoreLabel.text = "Score: " + scoreValue;
+                bonusLabel.text = "Bonus: " + bonusValue;
                 scene.remove(player);
                 player.position.set(0, 10, 10);
                 scene.add(player);
@@ -815,8 +817,20 @@ var game = (function () {
             }
             if (event.name === "Door1") {
                 console.log("Booped Door 1");
-                scoreValue += timeValue;
+                scoreValue += bonusValue;
                 scoreLabel.text = "Score: " + scoreValue;
+                bonusValue = 9999;
+                bonusLabel.text = "Bonus: " + bonusValue;
+                keyboardControls.enabled = false;
+                mouseControls.enabled = false;
+                blocker.style.display = '-webkit-box';
+                blocker.style.display = '-moz-box';
+                blocker.style.display = 'box';
+                instructions.style.display = '';
+                console.log("PointerLock disabled");
+                scene.remove(player);
+                player.position.set(0, 10, 10);
+                scene.add(player);
             }
             if (event.name === "Coin1") {
                 scene.remove(event);
@@ -926,8 +940,8 @@ var game = (function () {
         canvas.style.width = "100%";
         scoreLabel.x = config.Screen.WIDTH * 0.8;
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
-        timeLabel.x = config.Screen.WIDTH * 0.8;
-        timeLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
+        bonusLabel.x = config.Screen.WIDTH * 0.8;
+        bonusLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.update();
     }
     // Add Frame Rate Stats to the Scene
@@ -953,8 +967,8 @@ var game = (function () {
     function checkControls() {
         if (keyboardControls.enabled) {
             velocity = new Vector3();
-            timeValue--;
-            timeLabel.text = "Time: " + timeValue;
+            bonusValue--;
+            bonusLabel.text = "Bonus: " + bonusValue;
             var time = performance.now();
             var delta = (time - prevTime) / 1000;
             if (isGrounded) {
