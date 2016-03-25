@@ -253,6 +253,8 @@ var game = (() => {
     var scoreValue: number;
     var recentScoreLabel: createjs.Text;
     var recentScoreValue: number;
+    var highestScoreLabel: createjs.Text;
+    var highestScoreValue: number;
     var bonusValue: number;
     var bonusLabel: createjs.Text;
     
@@ -267,6 +269,7 @@ var game = (() => {
         //Initialize Score and Bonus value
         scoreValue = 0;
         recentScoreValue = 0;
+        highestScoreValue = 0;
         bonusValue = 9999;
 
         //Add score label
@@ -292,6 +295,19 @@ var game = (() => {
         recentScoreLabel.y = (config.Screen.HEIGHT * 0.2) * 0.15;
         stage.addChild(recentScoreLabel);
         console.log("Added recentScoreLabel to stage");
+                
+        //Add score label
+
+        highestScoreLabel = new createjs.Text(
+            "Highest Score: " + recentScoreValue,
+            "20px Consolas",
+            "#ffffff"
+        );
+        highestScoreLabel.x = config.Screen.WIDTH * 0.6;
+        highestScoreLabel.y = (config.Screen.HEIGHT * 0.2) * 0.15;
+        stage.addChild(highestScoreLabel);
+        console.log("Added highestScoreLabel to stage");
+        
         
         //Bonus label
         bonusLabel = new createjs.Text(
@@ -991,8 +1007,19 @@ var game = (() => {
                 scoreLabel.text = "Score: " + scoreValue;
                 bonusValue = 9999;
                 bonusLabel.text = "Bonus: " + bonusValue;
+                if (recentScoreValue > scoreValue)
+                {
+                    highestScoreValue = recentScoreValue;
+                    highestScoreLabel.text = "Highest Score: " + highestScoreValue;
+                }
+                else
+                {
+                    highestScoreValue = scoreValue;
+                    highestScoreLabel.text = "Highest Score: " + highestScoreValue;
+                }
                 recentScoreValue = scoreValue;
                 recentScoreLabel.text = "Recent Score: " + recentScoreValue;
+                
             keyboardControls.enabled = false;
             mouseControls.enabled = false;
             blocker.style.display = '-webkit-box';

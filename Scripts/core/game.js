@@ -200,6 +200,8 @@ var game = (function () {
     var scoreValue;
     var recentScoreLabel;
     var recentScoreValue;
+    var highestScoreLabel;
+    var highestScoreValue;
     var bonusValue;
     var bonusLabel;
     //Coin
@@ -212,6 +214,7 @@ var game = (function () {
         //Initialize Score and Bonus value
         scoreValue = 0;
         recentScoreValue = 0;
+        highestScoreValue = 0;
         bonusValue = 9999;
         //Add score label
         scoreLabel = new createjs.Text("Score: " + scoreValue, "40px Consolas", "#ffffff");
@@ -225,6 +228,12 @@ var game = (function () {
         recentScoreLabel.y = (config.Screen.HEIGHT * 0.2) * 0.15;
         stage.addChild(recentScoreLabel);
         console.log("Added recentScoreLabel to stage");
+        //Add score label
+        highestScoreLabel = new createjs.Text("Highest Score: " + recentScoreValue, "20px Consolas", "#ffffff");
+        highestScoreLabel.x = config.Screen.WIDTH * 0.6;
+        highestScoreLabel.y = (config.Screen.HEIGHT * 0.2) * 0.15;
+        stage.addChild(highestScoreLabel);
+        console.log("Added highestScoreLabel to stage");
         //Bonus label
         bonusLabel = new createjs.Text("Bonus: " + bonusValue, "40px Consolas", "#ffffff");
         bonusLabel.x = config.Screen.WIDTH * 0.8;
@@ -830,6 +839,14 @@ var game = (function () {
                 scoreLabel.text = "Score: " + scoreValue;
                 bonusValue = 9999;
                 bonusLabel.text = "Bonus: " + bonusValue;
+                if (recentScoreValue > scoreValue) {
+                    highestScoreValue = recentScoreValue;
+                    highestScoreLabel.text = "Highest Score: " + highestScoreValue;
+                }
+                else {
+                    highestScoreValue = scoreValue;
+                    highestScoreLabel.text = "Highest Score: " + highestScoreValue;
+                }
                 recentScoreValue = scoreValue;
                 recentScoreLabel.text = "Recent Score: " + recentScoreValue;
                 keyboardControls.enabled = false;
