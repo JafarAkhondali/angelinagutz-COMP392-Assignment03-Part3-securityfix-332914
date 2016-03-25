@@ -251,6 +251,8 @@ var game = (() => {
     var stage: createjs.Stage;
     var scoreLabel: createjs.Text;
     var scoreValue: number;
+    var recentScoreLabel: createjs.Text;
+    var recentScoreValue: number;
     var bonusValue: number;
     var bonusLabel: createjs.Text;
     
@@ -264,6 +266,7 @@ var game = (() => {
     function setupScoreboard(): void {
         //Initialize Score and Bonus value
         scoreValue = 0;
+        recentScoreValue = 0;
         bonusValue = 9999;
 
         //Add score label
@@ -277,6 +280,18 @@ var game = (() => {
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.addChild(scoreLabel);
         console.log("Added scoreLabel to stage");
+        
+        //Add score label
+
+        recentScoreLabel = new createjs.Text(
+            "Recent Score: " + recentScoreValue,
+            "20px Consolas",
+            "#ffffff"
+        );
+        recentScoreLabel.x = config.Screen.WIDTH * 0.3;
+        recentScoreLabel.y = (config.Screen.HEIGHT * 0.2) * 0.15;
+        stage.addChild(recentScoreLabel);
+        console.log("Added recentScoreLabel to stage");
         
         //Bonus label
         bonusLabel = new createjs.Text(
@@ -976,6 +991,8 @@ var game = (() => {
                 scoreLabel.text = "Score: " + scoreValue;
                 bonusValue = 9999;
                 bonusLabel.text = "Bonus: " + bonusValue;
+                recentScoreValue = scoreValue;
+                recentScoreLabel.text = "Recent Score: " + recentScoreValue;
             keyboardControls.enabled = false;
             mouseControls.enabled = false;
             blocker.style.display = '-webkit-box';

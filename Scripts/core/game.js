@@ -198,6 +198,8 @@ var game = (function () {
     var stage;
     var scoreLabel;
     var scoreValue;
+    var recentScoreLabel;
+    var recentScoreValue;
     var bonusValue;
     var bonusLabel;
     //Coin
@@ -209,6 +211,7 @@ var game = (function () {
     function setupScoreboard() {
         //Initialize Score and Bonus value
         scoreValue = 0;
+        recentScoreValue = 0;
         bonusValue = 9999;
         //Add score label
         scoreLabel = new createjs.Text("Score: " + scoreValue, "40px Consolas", "#ffffff");
@@ -216,6 +219,12 @@ var game = (function () {
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.addChild(scoreLabel);
         console.log("Added scoreLabel to stage");
+        //Add score label
+        recentScoreLabel = new createjs.Text("Recent Score: " + recentScoreValue, "20px Consolas", "#ffffff");
+        recentScoreLabel.x = config.Screen.WIDTH * 0.3;
+        recentScoreLabel.y = (config.Screen.HEIGHT * 0.2) * 0.15;
+        stage.addChild(recentScoreLabel);
+        console.log("Added recentScoreLabel to stage");
         //Bonus label
         bonusLabel = new createjs.Text("Bonus: " + bonusValue, "40px Consolas", "#ffffff");
         bonusLabel.x = config.Screen.WIDTH * 0.8;
@@ -821,6 +830,8 @@ var game = (function () {
                 scoreLabel.text = "Score: " + scoreValue;
                 bonusValue = 9999;
                 bonusLabel.text = "Bonus: " + bonusValue;
+                recentScoreValue = scoreValue;
+                recentScoreLabel.text = "Recent Score: " + recentScoreValue;
                 keyboardControls.enabled = false;
                 mouseControls.enabled = false;
                 blocker.style.display = '-webkit-box';
