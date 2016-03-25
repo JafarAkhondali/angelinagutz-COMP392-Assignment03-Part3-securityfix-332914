@@ -831,6 +831,8 @@ var game = (function () {
                 scene.remove(player);
                 player.position.set(0, 10, 10);
                 scene.add(player);
+                scoreValue = 0;
+                scoreLabel.text = "Score: " + scoreValue;
             }
             if (event.name === "Coin1") {
                 scene.remove(event);
