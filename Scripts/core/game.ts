@@ -292,19 +292,19 @@ var game = (() => {
             "#ffffff"
         );
         recentScoreLabel.x = config.Screen.WIDTH * 0.3;
-        recentScoreLabel.y = (config.Screen.HEIGHT * 0.2) * 0.15;
+        recentScoreLabel.y = (config.Screen.HEIGHT * 0.22) * 0.15;
         stage.addChild(recentScoreLabel);
         console.log("Added recentScoreLabel to stage");
                 
         //Add score label
 
         highestScoreLabel = new createjs.Text(
-            "Highest Score: " + recentScoreValue,
+            "High Score: " + recentScoreValue,
             "20px Consolas",
             "#ffffff"
         );
         highestScoreLabel.x = config.Screen.WIDTH * 0.6;
-        highestScoreLabel.y = (config.Screen.HEIGHT * 0.2) * 0.15;
+        highestScoreLabel.y = (config.Screen.HEIGHT * 0.22) * 0.15;
         stage.addChild(highestScoreLabel);
         console.log("Added highestScoreLabel to stage");
         
@@ -1010,12 +1010,12 @@ var game = (() => {
                 if (recentScoreValue > scoreValue)
                 {
                     highestScoreValue = recentScoreValue;
-                    highestScoreLabel.text = "Highest Score: " + highestScoreValue;
+                    highestScoreLabel.text = "High Score: " + highestScoreValue;
                 }
                 else
                 {
                     highestScoreValue = scoreValue;
-                    highestScoreLabel.text = "Highest Score: " + highestScoreValue;
+                    highestScoreLabel.text = "High Score: " + highestScoreValue;
                 }
                 recentScoreValue = scoreValue;
                 recentScoreLabel.text = "Recent Score: " + recentScoreValue;
