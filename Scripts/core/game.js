@@ -266,7 +266,7 @@ var game = (function () {
         { id: "walk", src: "../../Assets/audio/Footstep01.wav" },
         { id: "land", src: "../../Assets/audio/Land.wav" },
         { id: "jump", src: "../../Assets/audio/jump.mp3" },
-        { id: "muse", src: "../../Assets/audio/P3-WhentheMoonReachestotheStars.mp3" }
+        { id: "muse", src: "../../Assets/audio/toby-fox-UNDERTALE-Soundtrack-51-Another-Medium.mp3" }
     ];
     function preload() {
         assets = new createjs.LoadQueue();
@@ -933,7 +933,7 @@ var game = (function () {
         player.add(camera);
         camera.position.set(0, 1, 0);
         // Add game music
-        createjs.Sound.play("muse", 0, 0, 0, -1, 0.35);
+        createjs.Sound.play("muse", 0, 0, 0, -1, 1);
         // Add framerate stats
         addStatsObject();
         console.log("Added Stats to scene...");
@@ -1051,19 +1051,19 @@ var game = (function () {
             if (isGrounded) {
                 var direction = new Vector3(0, 0, 0);
                 if (keyboardControls.moveForward) {
-                    createjs.Sound.play("walk");
+                    createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                     velocity.z -= 400.0 * delta;
                 }
                 if (keyboardControls.moveLeft) {
-                    createjs.Sound.play("walk");
+                    createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                     velocity.x -= 400.0 * delta;
                 }
                 if (keyboardControls.moveBackward) {
-                    createjs.Sound.play("walk");
+                    createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                     velocity.z += 400.0 * delta;
                 }
                 if (keyboardControls.moveRight) {
-                    createjs.Sound.play("walk");
+                    createjs.Sound.play("walk", 0, 0, 0, 0, 0.25);
                     velocity.x += 400.0 * delta;
                 }
                 if (keyboardControls.jump) {
