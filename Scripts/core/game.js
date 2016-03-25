@@ -198,6 +198,8 @@ var game = (function () {
     var stage;
     var scoreLabel;
     var scoreValue;
+    var timeValue;
+    var timeLabel;
     //Coin
     var coinGeometry;
     var coinMaterial;
@@ -205,14 +207,21 @@ var game = (function () {
     var coin2;
     var coin3;
     function setupScoreboard() {
-        //Initialize Score value
+        //Initialize Score and Time value
         scoreValue = 0;
+        timeValue = 9999;
         //Add score label
         scoreLabel = new createjs.Text("Score: " + scoreValue, "40px Consolas", "#ffffff");
         scoreLabel.x = config.Screen.WIDTH * 0.1;
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.addChild(scoreLabel);
         console.log("Added scoreLabel to stage");
+        //Time label
+        timeLabel = new createjs.Text("Time: " + timeValue, "40px Consolas", "#ffffff");
+        timeLabel.x = config.Screen.WIDTH * 0.8;
+        timeLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
+        stage.addChild(timeLabel);
+        console.log("Added timeLabel to stage");
     }
     function setupCanvas() {
         canvas = document.getElementById("canvas");
@@ -709,7 +718,7 @@ var game = (function () {
         scene.add(platform5);
         console.log("Added a Platform 5 to the scene");
         // Door Components
-        // Door One
+        // Door
         door1Texture = new THREE.TextureLoader().load('../../Assets/images/doorsTextureNo6901.jpg');
         door1Material = new PhongMaterial();
         door1Material.map = door1Texture;
@@ -719,7 +728,7 @@ var game = (function () {
         door1 = new Physijs.BoxMesh(door1Geometry, door1PhysicsMaterial, 0);
         door1.receiveShadow = true;
         door1.castShadow = true;
-        //Use rng to determine position of door and coins
+        //Use rng to determine position of door
         var num = Math.floor(Math.random() * 10);
         if (num > 5) {
             if (num > 8) {
@@ -737,9 +746,13 @@ var game = (function () {
                 door1.position.set(-60, 5, 51);
             }
         }
+        //     setCoinPosition();
         door1.name = "Door1";
         scene.add(door1);
         console.log("Added a Door1 to the scene");
+        //set Coin Mesh
+        setCoinMesh();
+        console.log("Added coins to the scene");
         //Player Cube (PC!)
         playerGeometry = new BoxGeometry(2, 4, 2);
         playerMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0x00ff00 }), 0.4, 0);
@@ -802,6 +815,23 @@ var game = (function () {
             }
             if (event.name === "Door1") {
                 console.log("Booped Door 1");
+                scoreValue += timeValue;
+                scoreLabel.text = "Score: " + scoreValue;
+            }
+            if (event.name === "Coin1") {
+                scene.remove(event);
+                scoreValue += 100;
+                scoreLabel.text = "Score: " + scoreValue;
+            }
+            if (event.name === "Coin2") {
+                scene.remove(event);
+                scoreValue += 100;
+                scoreLabel.text = "Score: " + scoreValue;
+            }
+            if (event.name === "Coin3") {
+                scene.remove(event);
+                scoreValue += 100;
+                scoreLabel.text = "Score: " + scoreValue;
             }
         });
         // Add DirectionLine
@@ -813,8 +843,8 @@ var game = (function () {
         player.add(directionLine);
         console.log("Added DirectionLine to the Player");
         // create parent-child relationship with camera and player
-        //  player.add(camera);
-        // camera.position.set(0, 1, 0);
+        player.add(camera);
+        camera.position.set(0, 1, 0);
         // Add framerate stats
         addStatsObject();
         console.log("Added Stats to scene...");
@@ -822,6 +852,49 @@ var game = (function () {
         gameLoop(); // render the scene	
         scene.simulate();
         window.addEventListener('resize', onWindowResize, false);
+    }
+    //Set coin Mesh
+    function setCoinMesh() {
+        var coinLoader = new THREE.JSONLoader().load("../../Assets/Models/coin.json", function (coinGeometry) {
+            var phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
+            phongMaterial.emissive = new THREE.Color(0xE7AB32);
+            coinMaterial = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
+            coin1 = new Physijs.ConvexMesh(coinGeometry, coinMaterial);
+            coin2 = new Physijs.ConvexMesh(coinGeometry, coinMaterial);
+            coin3 = new Physijs.ConvexMesh(coinGeometry, coinMaterial);
+            coin1.receiveShadow = true;
+            coin1.castShadow = true;
+            coin2.receiveShadow = true;
+            coin2.castShadow = true;
+            coin3.receiveShadow = true;
+            coin3.castShadow = true;
+            coin1.name = "Coin1";
+            coin2.name = "Coin2";
+            coin3.name = "Coin3";
+            if (door1.position.set(60, 5, -51)) {
+                coin1.position.set(60, 5, 51);
+                coin2.position.set(-60, 5, -51);
+                coin3.position.set(-60, 5, 51);
+            }
+            if (door1.position.set(-60, 5, -51)) {
+                coin1.position.set(60, 5, -51);
+                coin2.position.set(60, 5, 51);
+                coin3.position.set(-60, 5, 51);
+            }
+            if (door1.position.set(60, 5, 51)) {
+                coin1.position.set(60, 5, -51);
+                coin2.position.set(-60, 5, -51);
+                coin3.position.set(-60, 5, 51);
+            }
+            if (door1.position.set(-60, 5, 51)) {
+                coin1.position.set(60, 5, -51);
+                coin2.position.set(-60, 5, -51);
+                coin3.position.set(60, 5, 51);
+            }
+            scene.add(coin1);
+            scene.add(coin2);
+            scene.add(coin3);
+        });
     }
     function pointerLockChange(event) {
         if (document.pointerLockElement === element) {
@@ -853,6 +926,8 @@ var game = (function () {
         canvas.style.width = "100%";
         scoreLabel.x = config.Screen.WIDTH * 0.8;
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
+        timeLabel.x = config.Screen.WIDTH * 0.8;
+        timeLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.update();
     }
     // Add Frame Rate Stats to the Scene
@@ -878,6 +953,8 @@ var game = (function () {
     function checkControls() {
         if (keyboardControls.enabled) {
             velocity = new Vector3();
+            timeValue--;
+            timeLabel.text = "Time: " + timeValue;
             var time = performance.now();
             var delta = (time - prevTime) / 1000;
             if (isGrounded) {
@@ -939,8 +1016,8 @@ var game = (function () {
     // Setup main camera for the scene
     function setupCamera() {
         camera = new PerspectiveCamera(35, config.Screen.RATIO, 0.1, 300);
-        camera.position.set(0, 100, 100);
-        camera.lookAt(new Vector3(0, 0, 0));
+        //    camera.position.set(0, 100, 100);
+        //   camera.lookAt(new Vector3(0, 0, 0));
         console.log("Finished setting up Camera...");
     }
     window.onload = init;
