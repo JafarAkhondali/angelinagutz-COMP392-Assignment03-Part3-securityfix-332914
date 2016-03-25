@@ -264,7 +264,10 @@ var game = (() => {
     var coin1: Physijs.ConvexMesh;
     var coin2: Physijs.ConvexMesh;
     var coin3: Physijs.ConvexMesh;
-
+    
+    //
+    var assets: createjs.LoadQueue;
+    
     function setupScoreboard(): void {
         //Initialize Score and Bonus value
         scoreValue = 0;
@@ -329,8 +332,21 @@ var game = (() => {
         canvas.style.backgroundColor = "#000000";
         stage = new createjs.Stage(canvas);
     }
-
-    function init(): void {
+    var manifest = [
+         { id: "land", src: "../../Assets/audio/Land.wav" },
+         { id: "coin", src: "../../Assets/audio/coin.mp3" },
+         { id: "lava", src: "../../Assets/audio/lavaburn.mp3" },
+         { id: "door", src: "../../Assets/audio/doorUnlock.mp3" },
+         { id: "walk", src: "../../Assets/audio/Footstep01.wav" }
+    ];
+    
+    function preload(): void {
+         assets = new createjs.LoadQueue();
+         assets.installPlugin(createjs.Sound);
+         assets.on("complete", init, this);
+         assets.loadManifest(manifest);
+     }
+     function init(): void {
         // Create to HTMLElements
         blocker = document.getElementById("blocker");
         instructions = document.getElementById("instructions");
@@ -949,6 +965,7 @@ var game = (() => {
         player.addEventListener('collision', (event) => {
             console.log(event);
             if (event.name === "Ground") {
+                createjs.Sound.play("lava");
                 console.log("Booped ground");
             keyboardControls.enabled = false;
             mouseControls.enabled = false;
@@ -966,6 +983,7 @@ var game = (() => {
             scene.add(player);
             }
             if (event.name === "Road1") {
+                createjs.Sound.play("walk");
                 console.log("Booped Road1");
                 isGrounded = true;
             }
@@ -983,6 +1001,7 @@ var game = (() => {
             if (event.name === "Platform1") {
                 console.log("Booped Platform 1");
                 isGrounded = true;
+                createjs.Sound.play("land");
             }
             if (event.name === "Platform2") {
                 console.log("Booped Platform 2");
@@ -1002,6 +1021,7 @@ var game = (() => {
                 isGrounded = true;
             }
             if (event.name === "Door1") {
+                createjs.Sound.play("door");
                 console.log("Booped Door 1");
                 scoreValue += bonusValue;
                 scoreLabel.text = "Score: " + scoreValue;
@@ -1036,16 +1056,19 @@ var game = (() => {
                 
             }
             if (event.name === "Coin1") {
+                createjs.Sound.play("coin");
                 scene.remove(event);
                 scoreValue += 100;
                 scoreLabel.text = "Score: " + scoreValue;
             }
              if (event.name === "Coin2") {
+                createjs.Sound.play("coin");
                 scene.remove(event);
                 scoreValue += 100;
                 scoreLabel.text = "Score: " + scoreValue;
             }
              if (event.name === "Coin3") {
+                createjs.Sound.play("coin");
                 scene.remove(event);
                 scoreValue += 100;
                 scoreLabel.text = "Score: " + scoreValue;
@@ -1267,7 +1290,7 @@ var game = (() => {
         console.log("Finished setting up Camera...");
     }
 
-    window.onload = init;
+    window.onload = preload;
 
     return {
         scene: scene
