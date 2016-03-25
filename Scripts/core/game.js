@@ -204,6 +204,8 @@ var game = (function () {
     var highestScoreValue;
     var bonusValue;
     var bonusLabel;
+    var livesValue;
+    var livesLabel;
     //Coin
     var coinGeometry;
     var coinMaterial;
@@ -213,30 +215,37 @@ var game = (function () {
     //
     var assets;
     function setupScoreboard() {
-        //Initialize Score and Bonus value
+        //Initialize Scores, Lives and Bonus value
         scoreValue = 0;
         recentScoreValue = 0;
+        livesValue = 5;
         highestScoreValue = 0;
         bonusValue = 9999;
-        //Add score label
+        //Add (Current) Score Label
         scoreLabel = new createjs.Text("Score: " + scoreValue, "40px Consolas", "#ffffff");
         scoreLabel.x = config.Screen.WIDTH * 0.1;
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.addChild(scoreLabel);
         console.log("Added scoreLabel to stage");
-        //Add score label
+        //Add Recent Score Label
         recentScoreLabel = new createjs.Text("Recent Score: " + recentScoreValue, "20px Consolas", "#ffffff");
         recentScoreLabel.x = config.Screen.WIDTH * 0.3;
         recentScoreLabel.y = (config.Screen.HEIGHT * 0.22) * 0.15;
         stage.addChild(recentScoreLabel);
         console.log("Added recentScoreLabel to stage");
-        //Add score label
+        // Add Lives Label
+        livesLabel = new createjs.Text("Lives: " + livesValue, "40px Consolas", "#ffffff");
+        livesLabel.x = config.Screen.WIDTH * 0.45;
+        livesLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
+        stage.addChild(livesLabel);
+        console.log("Added livesLabel to stage");
+        //Add Highest Score Label
         highestScoreLabel = new createjs.Text("High Score: " + recentScoreValue, "20px Consolas", "#ffffff");
         highestScoreLabel.x = config.Screen.WIDTH * 0.6;
         highestScoreLabel.y = (config.Screen.HEIGHT * 0.22) * 0.15;
         stage.addChild(highestScoreLabel);
         console.log("Added highestScoreLabel to stage");
-        //Bonus label
+        // Add Bonus Label
         bonusLabel = new createjs.Text("Bonus: " + bonusValue, "40px Consolas", "#ffffff");
         bonusLabel.x = config.Screen.WIDTH * 0.8;
         bonusLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
@@ -804,6 +813,8 @@ var game = (function () {
             if (event.name === "Ground") {
                 createjs.Sound.play("lava");
                 console.log("Booped ground");
+                livesValue--;
+                livesLabel.text = "Lives: " + livesValue;
                 document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
                 document.exitPointerLock();
                 keyboardControls.enabled = false;
@@ -817,6 +828,10 @@ var game = (function () {
                 bonusValue = 9999;
                 scoreLabel.text = "Score: " + scoreValue;
                 bonusLabel.text = "Bonus: " + bonusValue;
+                if (livesValue == 1) {
+                    //window.location.reload(true); // Force reload browser
+                    livesValue = 6;
+                }
                 scene.remove(player);
                 player.position.set(0, 10, 10);
                 scene.add(player);
@@ -918,7 +933,7 @@ var game = (function () {
         player.add(camera);
         camera.position.set(0, 1, 0);
         // Add game music
-        //createjs.Sound.play("muse", 0, 0, 0, -1);
+        createjs.Sound.play("muse", 0, 0, 0, -1, 0.35);
         // Add framerate stats
         addStatsObject();
         console.log("Added Stats to scene...");
@@ -980,7 +995,7 @@ var game = (function () {
         }
         else {
             //disable mouse and keyboard controls
-            createjs.Sound.muted = true;
+            //createjs.Sound.muted = true;
             keyboardControls.enabled = false;
             mouseControls.enabled = false;
             blocker.style.display = '-webkit-box';
