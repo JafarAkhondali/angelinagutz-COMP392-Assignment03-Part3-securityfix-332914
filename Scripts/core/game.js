@@ -251,11 +251,12 @@ var game = (function () {
         stage = new createjs.Stage(canvas);
     }
     var manifest = [
-        { id: "land", src: "../../Assets/audio/Land.wav" },
-        { id: "coin", src: "../../Assets/audio/coin.mp3" },
+        { id: "coin", src: "../../Assets/audio/coin.wav" },
         { id: "lava", src: "../../Assets/audio/lavaburn.mp3" },
         { id: "door", src: "../../Assets/audio/doorUnlock.mp3" },
         { id: "walk", src: "../../Assets/audio/Footstep01.wav" },
+        { id: "land", src: "../../Assets/audio/Land.wav" },
+        { id: "jump", src: "../../Assets/audio/jump.mp3" },
         { id: "muse", src: "../../Assets/audio/P3-WhentheMoonReachestotheStars.mp3" }
     ];
     function preload() {
@@ -803,6 +804,8 @@ var game = (function () {
             if (event.name === "Ground") {
                 createjs.Sound.play("lava");
                 console.log("Booped ground");
+                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                document.exitPointerLock();
                 keyboardControls.enabled = false;
                 mouseControls.enabled = false;
                 blocker.style.display = '-webkit-box';
@@ -810,8 +813,6 @@ var game = (function () {
                 blocker.style.display = 'box';
                 instructions.style.display = '';
                 console.log("PointerLock disabled");
-                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
-                document.exitPointerLock();
                 scoreValue = 0;
                 bonusValue = 9999;
                 scoreLabel.text = "Score: " + scoreValue;
@@ -819,7 +820,6 @@ var game = (function () {
                 scene.remove(player);
                 player.position.set(0, 10, 10);
                 scene.add(player);
-                createjs.Sound.muted = true;
             }
             if (event.name === "Road1") {
                 createjs.Sound.play("walk");
@@ -856,8 +856,6 @@ var game = (function () {
                 isGrounded = true;
             }
             if (event.name === "Door1") {
-                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
-                document.exitPointerLock();
                 createjs.Sound.play("door");
                 console.log("Booped Door 1");
                 scoreValue += bonusValue;
@@ -874,6 +872,8 @@ var game = (function () {
                 }
                 recentScoreValue = scoreValue;
                 recentScoreLabel.text = "Recent Score: " + recentScoreValue;
+                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                document.exitPointerLock();
                 keyboardControls.enabled = false;
                 mouseControls.enabled = false;
                 blocker.style.display = '-webkit-box';
@@ -917,11 +917,11 @@ var game = (function () {
         // create parent-child relationship with camera and player
         player.add(camera);
         camera.position.set(0, 1, 0);
+        // Add game music
+        //createjs.Sound.play("muse", 0, 0, 0, -1);
         // Add framerate stats
         addStatsObject();
         console.log("Added Stats to scene...");
-        // Add game music
-        createjs.Sound.play("muse", 0, 0, 0, -1);
         document.body.appendChild(renderer.domElement);
         gameLoop(); // render the scene	
         scene.simulate();
@@ -1036,18 +1036,23 @@ var game = (function () {
             if (isGrounded) {
                 var direction = new Vector3(0, 0, 0);
                 if (keyboardControls.moveForward) {
+                    createjs.Sound.play("walk");
                     velocity.z -= 400.0 * delta;
                 }
                 if (keyboardControls.moveLeft) {
+                    createjs.Sound.play("walk");
                     velocity.x -= 400.0 * delta;
                 }
                 if (keyboardControls.moveBackward) {
+                    createjs.Sound.play("walk");
                     velocity.z += 400.0 * delta;
                 }
                 if (keyboardControls.moveRight) {
+                    createjs.Sound.play("walk");
                     velocity.x += 400.0 * delta;
                 }
                 if (keyboardControls.jump) {
+                    createjs.Sound.play("jump");
                     velocity.y += 4000.0 * delta;
                     if (player.position.y > 500) {
                         isGrounded = false;

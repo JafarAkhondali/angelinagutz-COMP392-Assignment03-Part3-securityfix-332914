@@ -267,7 +267,7 @@ var game = (() => {
     
     //
     var assets: createjs.LoadQueue;
-
+    
     function setupScoreboard(): void {
         //Initialize Score and Bonus value
         scoreValue = 0;
@@ -333,21 +333,22 @@ var game = (() => {
         stage = new createjs.Stage(canvas);
     }
     var manifest = [
-        { id: "land", src: "../../Assets/audio/Land.wav" },
-        { id: "coin", src: "../../Assets/audio/coin.mp3" },
-        { id: "lava", src: "../../Assets/audio/lavaburn.mp3" },
-        { id: "door", src: "../../Assets/audio/doorUnlock.mp3" },
-        { id: "walk", src: "../../Assets/audio/Footstep01.wav" },
-        { id: "muse", src: "../../Assets/audio/P3-WhentheMoonReachestotheStars.mp3" }
+         { id: "coin", src: "../../Assets/audio/coin.wav" },
+         { id: "lava", src: "../../Assets/audio/lavaburn.mp3" },
+         { id: "door", src: "../../Assets/audio/doorUnlock.mp3" },
+         { id: "walk", src: "../../Assets/audio/Footstep01.wav" },
+         { id: "land", src: "../../Assets/audio/Land.wav" },
+         { id: "jump", src: "../../Assets/audio/jump.mp3" },
+         { id: "muse", src: "../../Assets/audio/P3-WhentheMoonReachestotheStars.mp3" }
     ];
-
+    
     function preload(): void {
-        assets = new createjs.LoadQueue();
-        assets.installPlugin(createjs.Sound);
-        assets.on("complete", init, this);
-        assets.loadManifest(manifest);
-    }
-    function init(): void {
+         assets = new createjs.LoadQueue();
+         assets.installPlugin(createjs.Sound);
+         assets.on("complete", init, this);
+         assets.loadManifest(manifest);
+     }
+     function init(): void {
         // Create to HTMLElements
         blocker = document.getElementById("blocker");
         instructions = document.getElementById("instructions");
@@ -533,7 +534,7 @@ var game = (() => {
         scene.add(road6);
         console.log("Added a Road 6 to the scene");
         
-        // Road Seven
+         // Road Seven
         road7Geometry = new BoxGeometry(110, 4, 1);
         road7PhysicsMaterial = Physijs.createMaterial(roadMainMaterial, 0, 0);
         road7 = new Physijs.BoxMesh(road7Geometry, road7PhysicsMaterial, 0);
@@ -929,7 +930,7 @@ var game = (() => {
         var num: number = Math.floor(Math.random() * 10);
         if (num > 5) {
             if (num > 8) {
-                door1.position.set(60, 5, -51);
+                door1.position.set(60, 5, -51);  
             }
             else {
                 door1.position.set(-60, 5, -51);
@@ -939,17 +940,17 @@ var game = (() => {
             if (num > 3) {
                 door1.position.set(60, 5, 51);
             }
-            else {
+            else{
                 door1.position.set(-60, 5, 51);
             }
         }
-        //     setCoinPosition();
+  //     setCoinPosition();
         door1.name = "Door1";
         scene.add(door1);
         console.log("Added a Door1 to the scene");
 
         //set Coin Mesh
-        setCoinMesh();
+        setCoinMesh();   
         console.log("Added coins to the scene");
         //Player Cube (PC!)
         playerGeometry = new BoxGeometry(2, 4, 2);
@@ -969,23 +970,22 @@ var game = (() => {
             if (event.name === "Ground") {
                 createjs.Sound.play("lava");
                 console.log("Booped ground");
-                keyboardControls.enabled = false;
-                mouseControls.enabled = false;
-                blocker.style.display = '-webkit-box';
-                blocker.style.display = '-moz-box';
-                blocker.style.display = 'box';
-                instructions.style.display = '';
-                console.log("PointerLock disabled");
                 document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
                 document.exitPointerLock();
-                scoreValue = 0;
-                bonusValue = 9999;
-                scoreLabel.text = "Score: " + scoreValue;
-                bonusLabel.text = "Bonus: " + bonusValue;
-                scene.remove(player);
-                player.position.set(0, 10, 10);
-                scene.add(player);
-                createjs.Sound.muted = true;
+            keyboardControls.enabled = false;
+            mouseControls.enabled = false;
+            blocker.style.display = '-webkit-box';
+            blocker.style.display = '-moz-box';
+            blocker.style.display = 'box';
+            instructions.style.display = '';
+            console.log("PointerLock disabled");
+            scoreValue = 0;
+            bonusValue = 9999;
+            scoreLabel.text = "Score: " + scoreValue;
+            bonusLabel.text = "Bonus: " + bonusValue;
+            scene.remove(player);
+            player.position.set(0, 10, 10);
+            scene.add(player);
             }
             if (event.name === "Road1") {
                 createjs.Sound.play("walk");
@@ -1026,36 +1026,39 @@ var game = (() => {
                 isGrounded = true;
             }
             if (event.name === "Door1") {
-                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
-                document.exitPointerLock();
                 createjs.Sound.play("door");
                 console.log("Booped Door 1");
                 scoreValue += bonusValue;
                 scoreLabel.text = "Score: " + scoreValue;
                 bonusValue = 9999;
                 bonusLabel.text = "Bonus: " + bonusValue;
-                if (recentScoreValue > scoreValue) {
+                if (recentScoreValue > scoreValue)
+                {
                     highestScoreValue = recentScoreValue;
                     highestScoreLabel.text = "High Score: " + highestScoreValue;
                 }
-                else {
+                else
+                {
                     highestScoreValue = scoreValue;
                     highestScoreLabel.text = "High Score: " + highestScoreValue;
                 }
                 recentScoreValue = scoreValue;
                 recentScoreLabel.text = "Recent Score: " + recentScoreValue;
-                keyboardControls.enabled = false;
-                mouseControls.enabled = false;
-                blocker.style.display = '-webkit-box';
-                blocker.style.display = '-moz-box';
-                blocker.style.display = 'box';
-                instructions.style.display = '';
-                console.log("PointerLock disabled");
-                scene.remove(player);
-                player.position.set(0, 10, 10);
-                scene.add(player);
-                scoreValue = 0;
-                scoreLabel.text = "Score: " + scoreValue;
+                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                document.exitPointerLock();
+            keyboardControls.enabled = false;
+            mouseControls.enabled = false;
+            blocker.style.display = '-webkit-box';
+            blocker.style.display = '-moz-box';
+            blocker.style.display = 'box';
+            instructions.style.display = '';
+            console.log("PointerLock disabled");
+            scene.remove(player);
+            player.position.set(0, 10, 10);
+            scene.add(player);
+            scoreValue = 0;
+            scoreLabel.text = "Score: " + scoreValue;
+                
             }
             if (event.name === "Coin1") {
                 createjs.Sound.play("coin");
@@ -1063,13 +1066,13 @@ var game = (() => {
                 scoreValue += 100;
                 scoreLabel.text = "Score: " + scoreValue;
             }
-            if (event.name === "Coin2") {
+             if (event.name === "Coin2") {
                 createjs.Sound.play("coin");
                 scene.remove(event);
                 scoreValue += 100;
                 scoreLabel.text = "Score: " + scoreValue;
             }
-            if (event.name === "Coin3") {
+             if (event.name === "Coin3") {
                 createjs.Sound.play("coin");
                 scene.remove(event);
                 scoreValue += 100;
@@ -1090,12 +1093,12 @@ var game = (() => {
         player.add(camera);
         camera.position.set(0, 1, 0);
         
+        // Add game music
+        //createjs.Sound.play("muse", 0, 0, 0, -1);
+        
         // Add framerate stats
         addStatsObject();
         console.log("Added Stats to scene...");
-        
-        // Add game music
-        createjs.Sound.play("muse", 0, 0, 0, -1);
 
         document.body.appendChild(renderer.domElement);
         gameLoop(); // render the scene	
@@ -1103,27 +1106,27 @@ var game = (() => {
 
         window.addEventListener('resize', onWindowResize, false);
     }
-    //Set coin Mesh
-    function setCoinMesh(): void {
-        var coinLoader = new THREE.JSONLoader().load("../../Assets/Models/coin.json", function(coinGeometry: Geometry): void {
+        //Set coin Mesh
+        function setCoinMesh(): void {
+            var coinLoader = new THREE.JSONLoader().load("../../Assets/Models/coin.json", function(coinGeometry: Geometry): void {
             var phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
             phongMaterial.emissive = new THREE.Color(0xE7AB32);
             coinMaterial = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
             coin1 = new Physijs.ConvexMesh(coinGeometry, coinMaterial);
             coin2 = new Physijs.ConvexMesh(coinGeometry, coinMaterial);
             coin3 = new Physijs.ConvexMesh(coinGeometry, coinMaterial);
-
+            
             coin1.receiveShadow = true;
-            coin1.castShadow = true;
+            coin1.castShadow = true; 
             coin2.receiveShadow = true;
             coin2.castShadow = true;
             coin3.receiveShadow = true;
-            coin3.castShadow = true;
+            coin3.castShadow = true;          
             coin1.name = "Coin1";
             coin2.name = "Coin2";
             coin3.name = "Coin3";
-
-            if (door1.position.set(60, 5, -51)) {
+            
+              if (door1.position.set(60, 5, -51)) {
                 coin1.position.set(60, 5, 51);
                 coin2.position.set(-60, 5, -51);
                 coin3.position.set(-60, 5, 51);
@@ -1143,12 +1146,12 @@ var game = (() => {
                 coin2.position.set(-60, 5, -51);
                 coin3.position.set(60, 5, 51);
             }
-            scene.add(coin1);
-            scene.add(coin2);
-            scene.add(coin3);
+        scene.add(coin1);
+        scene.add(coin2);
+        scene.add(coin3);
+          }
+          );
         }
-        );
-    }
 
 
     function pointerLockChange(event): void {
@@ -1169,7 +1172,7 @@ var game = (() => {
             blocker.style.display = 'box';
             instructions.style.display = '';
             console.log("PointerLock disabled");
-
+            
         }
     }
 
@@ -1183,13 +1186,13 @@ var game = (() => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        canvas.style.width = "100%";
+        canvas.style.width = "100%";     
         scoreLabel.x = config.Screen.WIDTH * 0.8;
         scoreLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         bonusLabel.x = config.Screen.WIDTH * 0.8;
         bonusLabel.y = (config.Screen.HEIGHT * 0.1) * 0.15;
         stage.update();
-
+        
     }
 
     // Add Frame Rate Stats to the Scene
@@ -1227,18 +1230,23 @@ var game = (() => {
             if (isGrounded) {
                 var direction = new Vector3(0, 0, 0);
                 if (keyboardControls.moveForward) {
+                    createjs.Sound.play("walk");
                     velocity.z -= 400.0 * delta;
                 }
                 if (keyboardControls.moveLeft) {
+                    createjs.Sound.play("walk");
                     velocity.x -= 400.0 * delta;
                 }
                 if (keyboardControls.moveBackward) {
+                    createjs.Sound.play("walk");
                     velocity.z += 400.0 * delta;
                 }
                 if (keyboardControls.moveRight) {
+                    createjs.Sound.play("walk");
                     velocity.x += 400.0 * delta;
                 }
                 if (keyboardControls.jump) {
+                    createjs.Sound.play("jump");
                     velocity.y += 4000.0 * delta;
                     if (player.position.y > 500) {
                         isGrounded = false;
@@ -1293,8 +1301,8 @@ var game = (() => {
     // Setup main camera for the scene
     function setupCamera(): void {
         camera = new PerspectiveCamera(35, config.Screen.RATIO, 0.1, 300);
-        //    camera.position.set(0, 100, 100);
-        //   camera.lookAt(new Vector3(0, 0, 0));
+   //    camera.position.set(0, 100, 100);
+    //   camera.lookAt(new Vector3(0, 0, 0));
         console.log("Finished setting up Camera...");
     }
 
