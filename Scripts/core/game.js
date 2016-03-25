@@ -255,7 +255,8 @@ var game = (function () {
         { id: "coin", src: "../../Assets/audio/coin.mp3" },
         { id: "lava", src: "../../Assets/audio/lavaburn.mp3" },
         { id: "door", src: "../../Assets/audio/doorUnlock.mp3" },
-        { id: "walk", src: "../../Assets/audio/Footstep01.wav" }
+        { id: "walk", src: "../../Assets/audio/Footstep01.wav" },
+        { id: "muse", src: "../../Assets/audio/P3-WhentheMoonReachestotheStars.mp3" }
     ];
     function preload() {
         assets = new createjs.LoadQueue();
@@ -809,6 +810,8 @@ var game = (function () {
                 blocker.style.display = 'box';
                 instructions.style.display = '';
                 console.log("PointerLock disabled");
+                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                document.exitPointerLock();
                 scoreValue = 0;
                 bonusValue = 9999;
                 scoreLabel.text = "Score: " + scoreValue;
@@ -816,6 +819,7 @@ var game = (function () {
                 scene.remove(player);
                 player.position.set(0, 10, 10);
                 scene.add(player);
+                createjs.Sound.muted = true;
             }
             if (event.name === "Road1") {
                 createjs.Sound.play("walk");
@@ -852,6 +856,8 @@ var game = (function () {
                 isGrounded = true;
             }
             if (event.name === "Door1") {
+                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                document.exitPointerLock();
                 createjs.Sound.play("door");
                 console.log("Booped Door 1");
                 scoreValue += bonusValue;
@@ -868,8 +874,6 @@ var game = (function () {
                 }
                 recentScoreValue = scoreValue;
                 recentScoreLabel.text = "Recent Score: " + recentScoreValue;
-                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
-                document.exitPointerLock();
                 keyboardControls.enabled = false;
                 mouseControls.enabled = false;
                 blocker.style.display = '-webkit-box';
@@ -916,6 +920,8 @@ var game = (function () {
         // Add framerate stats
         addStatsObject();
         console.log("Added Stats to scene...");
+        // Add game music
+        createjs.Sound.play("muse", 0, 0, 0, -1);
         document.body.appendChild(renderer.domElement);
         gameLoop(); // render the scene	
         scene.simulate();
@@ -970,9 +976,11 @@ var game = (function () {
             keyboardControls.enabled = true;
             mouseControls.enabled = true;
             blocker.style.display = 'none';
+            createjs.Sound.muted = false;
         }
         else {
             //disable mouse and keyboard controls
+            createjs.Sound.muted = true;
             keyboardControls.enabled = false;
             mouseControls.enabled = false;
             blocker.style.display = '-webkit-box';
