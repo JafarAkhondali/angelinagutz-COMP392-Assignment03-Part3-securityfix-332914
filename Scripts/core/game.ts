@@ -1,7 +1,12 @@
 /// <reference path="_reference.ts"/>
 
 // MAIN GAME FILE
-
+//Source file name: game.ts
+//Author: Angelina Gutierrez and Elaine Mae Vallarino
+//Last Modified by: Angelina Gutierrez
+//Date last Modified: March 25, 2016
+//Program description: This is the main game file where the scene is created
+//Revision History: https://github.com/Flame2Ashes/COMP392-Assignment03-Part3/commits/master
 // THREEJS Aliases
 import Scene = Physijs.Scene;
 import Renderer = THREE.WebGLRenderer;
@@ -921,42 +926,8 @@ var game = (() => {
         scene.add(platform5);
         console.log("Added a Platform 5 to the scene");
         
-        // Door Components
-
-        // Door
-        door1Texture = new THREE.TextureLoader().load('../../Assets/images/doorsTextureNo6901.jpg');
-
-        door1Material = new PhongMaterial();
-        door1Material.map = door1Texture;
-        door1Material.bumpScale = 0.2;
-
-        door1Geometry = new BoxGeometry(3, 7, 0.5);
-        door1PhysicsMaterial = Physijs.createMaterial(door1Material, 0, 0);
-        door1 = new Physijs.BoxMesh(door1Geometry, door1PhysicsMaterial, 0);
-        door1.receiveShadow = true;
-        door1.castShadow = true;
-        
-        //Use rng to determine position of door
-        var num: number = Math.floor(Math.random() * 10);
-        if (num > 5) {
-            if (num > 8) {
-                door1.position.set(60, 5, -51);
-            }
-            else {
-                door1.position.set(-60, 5, -51);
-            }
-        }
-        else {
-            if (num > 3) {
-                door1.position.set(60, 5, 51);
-            }
-            else {
-                door1.position.set(-60, 5, 51);
-            }
-        }
-        //     setCoinPosition();
-        door1.name = "Door1";
-        scene.add(door1);
+        // set Door Mesh
+        setDoor();
         console.log("Added a Door1 to the scene");
 
         //set Coin Mesh
@@ -1018,6 +989,123 @@ var game = (() => {
                 console.log("Booped Road3");
                 isGrounded = true;
             }
+            
+             if (event.name === "Road4") {
+                console.log("Booped Road4");
+                isGrounded = true;
+            }
+            if (event.name === "Road5") {
+                console.log("Booped Road5");
+                isGrounded = true;
+            }
+            if (event.name === "Road6") {
+                console.log("Booped Road6");
+                isGrounded = true;
+            }
+            if (event.name === "Road7") {
+                console.log("Booped Road7");
+                isGrounded = true;
+            }
+            if (event.name === "Road8") {
+                console.log("Booped Road8");
+                isGrounded = true;
+            }
+            if (event.name === "Road9") {
+                console.log("Booped Road9");
+                isGrounded = true;
+            }
+            if (event.name === "Road10") {
+                console.log("Booped Road10");
+                isGrounded = true;
+            }
+            if (event.name === "Road11") {
+                console.log("Booped Road11");
+                isGrounded = true;
+            }
+            if (event.name === "Road12") {
+                console.log("Booped Road12");
+                isGrounded = true;
+            }
+            if (event.name === "Road13") {
+                console.log("Booped Road13");
+                isGrounded = true;
+            }
+            if (event.name === "Road14") {
+                console.log("Booped Road14");
+                isGrounded = true;
+            }
+            if (event.name === "Road15") {
+                console.log("Booped Road15");
+                isGrounded = true;
+            }
+            if (event.name === "Road16") {
+                console.log("Booped Road16");
+                isGrounded = true;
+            }
+            if (event.name === "Road17") {
+                console.log("Booped Road17");
+                isGrounded = true;
+            }
+            if (event.name === "Road18") {
+                console.log("Booped Road18");
+                isGrounded = true;
+            }
+            if (event.name === "Road19") {
+                console.log("Booped Road19");
+                isGrounded = true;
+            }
+            if (event.name === "Road20") {
+                console.log("Booped Road20");
+                isGrounded = true;
+            }
+            if (event.name === "Road21") {
+                console.log("Booped Road21");
+                isGrounded = true;
+            }
+            if (event.name === "Road22") {
+                console.log("Booped Road22");
+                isGrounded = true;
+            }
+            if (event.name === "Road23") {
+                console.log("Booped Road23");
+                isGrounded = true;
+            }
+            if (event.name === "Road24") {
+                console.log("Booped Road24");
+                isGrounded = true;
+            }
+            if (event.name === "Road25") {
+                console.log("Booped Road25");
+                isGrounded = true;
+            }
+            if (event.name === "Road26") {
+                console.log("Booped Road26");
+                isGrounded = true;
+            }
+            if (event.name === "Road27") {
+                console.log("Booped Road27");
+                isGrounded = true;
+            }
+            if (event.name === "Road28") {
+                console.log("Booped Road28");
+                isGrounded = true;
+            }
+            if (event.name === "Road29") {
+                console.log("Booped Road29");
+                isGrounded = true;
+            }
+            if (event.name === "Road30") {
+                console.log("Booped Road30");
+                isGrounded = true;
+            }
+            if (event.name === "Road31") {
+                console.log("Booped Road31");
+                isGrounded = true;
+            }
+            if (event.name === "Road32") {
+                console.log("Booped Road32");
+                isGrounded = true;
+            }
 
             if (event.name === "Platform1") {
                 console.log("Booped Platform 1");
@@ -1068,8 +1156,14 @@ var game = (() => {
                 instructions.style.display = '';
                 console.log("PointerLock disabled");
                 scene.remove(player);
+                scene.remove(door1);
+                setDoor();
+                scene.add(door1);
                 player.position.set(0, 10, 10);
                 scene.add(player);
+                scene.add(coin1);
+                scene.add(coin2);
+                scene.add(coin3);
                 scoreValue = 0;
                 scoreLabel.text = "Score: " + scoreValue;
 
@@ -1121,6 +1215,42 @@ var game = (() => {
 
         window.addEventListener('resize', onWindowResize, false);
     }
+    //Set Door
+    function setDoor(): void {
+        
+        door1Texture = new THREE.TextureLoader().load('../../Assets/images/doorsTextureNo6901.jpg');
+
+        door1Material = new PhongMaterial();
+        door1Material.map = door1Texture;
+        door1Material.bumpScale = 0.2;
+
+        door1Geometry = new BoxGeometry(3, 7, 0.5);
+        door1PhysicsMaterial = Physijs.createMaterial(door1Material, 0, 0);
+        door1 = new Physijs.BoxMesh(door1Geometry, door1PhysicsMaterial, 0);
+        door1.receiveShadow = true;
+        door1.castShadow = true;
+        
+        //Use rng to determine position of door
+        var num: number = Math.floor(Math.random() * 10);
+        if (num > 5) {
+            if (num > 8) {
+                door1.position.set(60, 5, -51);
+            }
+            else {
+                door1.position.set(-60, 5, -51);
+            }
+        }
+        else {
+            if (num > 3) {
+                door1.position.set(60, 5, 51);
+            }
+            else {
+                door1.position.set(-60, 5, 51);
+            }
+        }
+        door1.name = "Door1";
+        scene.add(door1);
+    }
     //Set coin Mesh
     function setCoinMesh(): void {
         var coinLoader = new THREE.JSONLoader().load("../../Assets/Models/coin.json", function(coinGeometry: Geometry): void {
@@ -1142,24 +1272,24 @@ var game = (() => {
             coin3.name = "Coin3";
 
             if (door1.position.set(60, 5, -51)) {
-                coin1.position.set(60, 5, 51);
-                coin2.position.set(-60, 5, -51);
-                coin3.position.set(-60, 5, 51);
+                coin1.position.set(60, 5, 50);
+                coin2.position.set(-60, 5, -50);
+                coin3.position.set(-60, 5, 50);
             }
             if (door1.position.set(-60, 5, -51)) {
-                coin1.position.set(60, 5, -51);
-                coin2.position.set(60, 5, 51);
-                coin3.position.set(-60, 5, 51);
+                coin1.position.set(60, 5, -50);
+                coin2.position.set(60, 5, 50);
+                coin3.position.set(-60, 5, 50);
             }
             if (door1.position.set(60, 5, 51)) {
-                coin1.position.set(60, 5, -51);
-                coin2.position.set(-60, 5, -51);
-                coin3.position.set(-60, 5, 51);
+                coin1.position.set(60, 5, -50);
+                coin2.position.set(-60, 5, -50);
+                coin3.position.set(-60, 5, 50);
             }
             if (door1.position.set(-60, 5, 51)) {
-                coin1.position.set(60, 5, -51);
-                coin2.position.set(-60, 5, -51);
-                coin3.position.set(60, 5, 51);
+                coin1.position.set(60, 5, -50);
+                coin2.position.set(-60, 5, -50);
+                coin3.position.set(60, 5, 50);
             }
             scene.add(coin1);
             scene.add(coin2);
@@ -1263,7 +1393,7 @@ var game = (() => {
                 if (keyboardControls.jump) {
                     createjs.Sound.play("jump");
                     velocity.y += 4000.0 * delta;
-                    if (player.position.y > 500) {
+                    if (player.position.y > 10) {
                         isGrounded = false;
                     }
                 }
