@@ -1,3 +1,9 @@
+//Source file name: mousecontrols.ts
+//Author: Angelina Gutierrez and Elaine Mae Vallarino
+//Last Modified by: Angelina Gutierrez
+//Date last Modified: March 25, 2016
+//Program description: The class for implementing mouse controls
+//Revision History: https://github.com/Flame2Ashes/COMP392-Assignment03-Part3/commits/master
 var objects;
 (function (objects) {
     // MouseControls Class +++++++++++++++

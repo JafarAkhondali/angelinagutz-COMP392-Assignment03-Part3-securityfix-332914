@@ -1,3 +1,9 @@
+//Source file name: keyboardcontrols.ts
+//Author: Angelina Gutierrez and Elaine Mae Vallarino
+//Last Modified by: Angelina Gutierrez
+//Date last Modified: March 21, 2016
+//Program description: The class for implementing keyboard controls
+//Revision History: https://github.com/Flame2Ashes/COMP392-Assignment03-Part3/commits/master
 var objects;
 (function (objects) {
     // KeyboardControls Class +++++++++++++++
